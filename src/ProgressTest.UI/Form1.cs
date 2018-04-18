@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ProgressTest.DI.Helpers;
@@ -17,7 +18,10 @@ namespace ProgressTest.UI
         public event OnProcessDocumentsHandle OnStartProcessDoc;
         public event OnProcessDocumentsHandle OnEndProcessDoc;
 
+        public bool Pause { get; set; }
+        public bool Stop { get; set; }
         public int Count { get; set; }
+        private Thread _thread;
 
         public Form1()
         {
@@ -32,7 +36,30 @@ namespace ProgressTest.UI
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            Pause = Stop = false;
             ProgressStart();
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            Pause = !Pause;
+
+            if (Pause)
+            {
+                timer1.Stop();
+                btnPause.Text = "Continuar";
+            }
+            else
+            {
+                timer1.Start();
+                btnPause.Text = "Pausar";
+            }
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            Stop = true;
+            EndProcess();
         }
 
         private void ProgressStart()
@@ -58,14 +85,29 @@ namespace ProgressTest.UI
 
         private bool EndProcess()
         {
-            if (progressBar.Value == progressBar.Maximum)
+            if (progressBar.Value == progressBar.Maximum || Stop)
             {
                 timer1.Stop();
-                SetOnEndProcessDoc("Teste Finalizado!!!");
+                timer1.Dispose();
+
+                if (Stop)
+                    StopProgress();
+                else
+                    SetOnEndProcessDoc("Teste Finalizado!!!");
+
                 return true;
             }
 
             return false;
+        }
+
+        private void StopProgress()
+        {
+            Text = "Teste Parado!";
+            Refresh();
+            progressBar.Value = spiner.Value = 0;
+            spiner.Reset();
+            label1.Text = "0%";
         }
 
         private void SignEventsProgress()

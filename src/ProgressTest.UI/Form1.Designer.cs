@@ -34,6 +34,8 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new MetroFramework.Controls.MetroLabel();
             this.btnStart = new MetroFramework.Controls.MetroButton();
+            this.btnPause = new MetroFramework.Controls.MetroButton();
+            this.btnStop = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // progressBar
@@ -82,11 +84,33 @@
             this.btnStart.UseSelectable = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
+            // btnPause
+            // 
+            this.btnPause.Location = new System.Drawing.Point(106, 88);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(75, 23);
+            this.btnPause.TabIndex = 4;
+            this.btnPause.Text = "Pausar";
+            this.btnPause.UseSelectable = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(188, 88);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 5;
+            this.btnStop.Text = "Parar";
+            this.btnStop.UseSelectable = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 193);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnPause);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.spiner);
@@ -105,6 +129,8 @@
         private System.Windows.Forms.Timer timer1;
         private MetroFramework.Controls.MetroLabel label1;
         private MetroFramework.Controls.MetroButton btnStart;
+        private MetroFramework.Controls.MetroButton btnPause;
+        private MetroFramework.Controls.MetroButton btnStop;
     }
 }
 
